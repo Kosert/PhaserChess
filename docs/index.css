@@ -1,0 +1,22 @@
+body {
+    background-color: #181a1b !important;
+}
+
+::-moz-selection {
+    /* Code for Firefox */
+    background-color: #6200ee !important;
+}
+
+::selection {
+    background-color: #6200ee !important;
+}
+
+#game {
+    max-width: 95vh;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#game > canvas {
+    cursor: pointer;
+}
