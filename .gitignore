@@ -10,5 +10,4 @@ node_modules
 .vscode
 yarn.lock
 src/desktop.ini
-dist/bundle.js
 logs
