@@ -3,12 +3,12 @@ import { MainScene } from "./main-scene"
 
 // main game configuration
 const config: Phaser.Types.Core.GameConfig = {
-    width: 1920,
-    height: 1080,
+    width: 1000,
+    height: 1000,
     scale: {
         mode: Phaser.Scale.FIT,
         parent: "game",
-        autoCenter: Phaser.Scale.CENTER_BOTH,
+        autoCenter: Phaser.Scale.CENTER_VERTICALLY
     },
     zoom: 1,
     fps: { target: 30 },
@@ -19,16 +19,9 @@ const config: Phaser.Types.Core.GameConfig = {
     input: {
         keyboard: true,
         mouse: true,
-        touch: false,
+        touch: true,
         gamepad: false,
-    },
-    physics: {
-        default: "matter",
-        matter: {
-            debug: false,
-            gravity: { x: 0, y: 0 },
-        },
-    },
+    }
 }
 
 // game class
