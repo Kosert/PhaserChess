@@ -4,7 +4,12 @@ import { LetterCoordinate } from "../letter-coordinate"
 import { NumberCoordinate } from "../number-coordinate"
 import { Color } from "./color"
 import { PieceType } from "./piece-type"
+import { Bishop } from "./pieces/bishop"
 import { King } from "./pieces/king"
+import { Knight } from "./pieces/knight"
+import { Pawn } from "./pieces/pawn"
+import { Queen } from "./pieces/queen"
+import { Rook } from "./pieces/rook"
 import { Square } from "./square"
 
 export class Board {
@@ -30,6 +35,11 @@ export class Board {
 
     getPossibleMovesFor(square: Square): Array<Coordinate> {
         return square.piece.type.movingStrategy(this.getSquare).getPossibleMovesFor(square)
+    }
+
+    getAllPieces(color: Color): Square[] {
+        return Coordinates.values.map((it) => this.getSquare(it))
+            .filter(it => it.piece?.color == color)
     }
 
     isKingInCheck(kingColor: Color): boolean {
@@ -73,8 +83,32 @@ export class Board {
 
     static startingPosition(): Board {
         const board = new Board()
+        board.getSquare(Coordinates.A1).piece = new Rook(Color.WHITE, "A1")
+        board.getSquare(Coordinates.B1).piece = new Knight(Color.WHITE, "B1")
+        board.getSquare(Coordinates.C1).piece = new Bishop(Color.WHITE, "C1")
+        board.getSquare(Coordinates.D1).piece = new Queen(Color.WHITE, "D1")
         board.getSquare(Coordinates.E1).piece = new King(Color.WHITE)
+        board.getSquare(Coordinates.F1).piece = new Bishop(Color.WHITE, "F1")
+        board.getSquare(Coordinates.G1).piece = new Knight(Color.WHITE, "G1")
+        board.getSquare(Coordinates.H1).piece = new Rook(Color.WHITE, "H1")
+        LetterCoordinate.values().forEach(it => {
+            const coordinate = new Coordinate(it, NumberCoordinate.TWO)
+            board.getSquare(coordinate).piece = new Pawn(Color.WHITE, coordinate.toString())
+        })
+
+        board.getSquare(Coordinates.A8).piece = new Rook(Color.BLACK, "A8")
+        board.getSquare(Coordinates.B8).piece = new Knight(Color.BLACK, "B8")
+        board.getSquare(Coordinates.C8).piece = new Bishop(Color.BLACK, "C8")
+        board.getSquare(Coordinates.D8).piece = new Queen(Color.BLACK, "D8")
         board.getSquare(Coordinates.E8).piece = new King(Color.BLACK)
+        board.getSquare(Coordinates.F8).piece = new Bishop(Color.BLACK, "F8")
+        board.getSquare(Coordinates.G8).piece = new Knight(Color.BLACK, "G8")
+        board.getSquare(Coordinates.H8).piece = new Rook(Color.BLACK, "H8")
+        LetterCoordinate.values().forEach(it => {
+            const coordinate = new Coordinate(it, NumberCoordinate.SEVEN)
+            board.getSquare(coordinate).piece = new Pawn(Color.BLACK, coordinate.toString())
+        })
+
         return board
     }
 }
