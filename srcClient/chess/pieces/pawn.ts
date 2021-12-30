@@ -1,6 +1,7 @@
 import { Color } from "../color"
 import { PieceType } from "../piece-type"
 import { AbstractPiece } from "./abstract-piece"
+import { Queen } from "./queen"
 
 export class Pawn extends AbstractPiece {
 
@@ -10,4 +11,7 @@ export class Pawn extends AbstractPiece {
         super(color, additionalId)
     }
 
+    toQueen(): Queen {
+        return new Queen(this.color, this.additionalId)
+    }
 }

@@ -6,7 +6,7 @@ export class AbstractPiece {
 
     readonly type: PieceType
     
-    constructor(readonly color: Color, private additionalId: string = "") {
+    constructor(readonly color: Color, protected additionalId: string = "") {
 
     }
     

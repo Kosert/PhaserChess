@@ -36,7 +36,6 @@ export class PawnMovingStrategy extends MovingStrategy {
             .filter((it) => this.getSquare(it).piece?.color == enemyColor)
         variations.push(...captureCoordinates)
 
-        // todo promotion
         // todo en passant
 
         return variations

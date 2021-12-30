@@ -1,8 +1,12 @@
 import { Coordinate } from "../coordinate"
+import { NumberCoordinate } from "../number-coordinate"
 import { Board } from "./board"
 import { Color } from "./color"
 import { GameState } from "./game-state"
 import { Move } from "./move"
+import { PieceType } from "./piece-type"
+import { Pawn } from "./pieces/pawn"
+import { Queen } from "./pieces/queen"
 import { Square } from "./square"
 
 export class ChessGame {
@@ -21,7 +25,7 @@ export class ChessGame {
     getLegalMovesFor(coordinate: Coordinate): Array<Coordinate> {
         const square = this.getSquare(coordinate)
         const playerColor = square.piece.color
-        const possibleTargets = this.currentBoard.getPossibleMovesFor(square)
+        const possibleTargets = this.currentBoard.getPossibleMovesFor(square, this.moves)
 
         return possibleTargets.filter((it) => {
             const json = this.currentBoard.serialize()
@@ -31,7 +35,8 @@ export class ChessGame {
             to.piece = from.piece
             from.piece = null
 
-            return !boardCopy.isKingInCheck(playerColor)
+            const possibleMove = new Move(from.coordinate, to.coordinate, to.piece.type)
+            return !boardCopy.isKingInCheck(playerColor, this.moves.concat(possibleMove))
         })
     }
 
@@ -46,13 +51,19 @@ export class ChessGame {
         console.log("New move: ", newMove.toString())
         this.moves.push(newMove)
 
+        const x = toSquare.piece.type == PieceType.Pawn && (to.number == NumberCoordinate.EIGHT || to.number == NumberCoordinate.ONE)
+        if (toSquare.piece.type == PieceType.Pawn && (to.number == NumberCoordinate.EIGHT || to.number == NumberCoordinate.ONE)) {
+            const pawn = toSquare.piece as Pawn
+            toSquare.piece = pawn.toQueen()
+        }
+
         const movedColor = GameState.getColorToMove(this.gameState)
         const colorToMove = Color.inverted(movedColor)
 
         const canMove = this.currentBoard.getAllPieces(colorToMove).some(it => this.getLegalMovesFor(it.coordinate).length > 0)
         if (!canMove) {
             this._gameState = GameState.GAME_FINISHED
-            if (this.currentBoard.isKingInCheck(colorToMove)) {
+            if (this.currentBoard.isKingInCheck(colorToMove, this.moves)) {
                 $('#resultToastText').text("Checkmate, winner: " + movedColor)
             } else {
                 $('#resultToastText').text("Draw by Stalemate")
