@@ -3,16 +3,17 @@ import { MovingStrategy } from "./moving-strategy"
 import { Square } from "../square"
 import { RookMovingStrategy } from "./rook-strategy"
 import { BishopMovingStrategy } from "./bishop-strategy"
+import { Move } from "../move"
 
 export class QueenMovingStrategy extends MovingStrategy {
 
     private rookMovingStrategy: RookMovingStrategy
     private bishopMovingStrategy: BishopMovingStrategy
 
-    constructor(protected getSquare: (coord: Coordinate) => Square) {
-        super(getSquare)
-        this.rookMovingStrategy = new RookMovingStrategy(this.getSquare)
-        this.bishopMovingStrategy = new BishopMovingStrategy(this.getSquare)
+    constructor(getSquare: (coord: Coordinate) => Square, moveHistory: Move[]) {
+        super(getSquare, moveHistory)
+        this.rookMovingStrategy = new RookMovingStrategy(getSquare, moveHistory)
+        this.bishopMovingStrategy = new BishopMovingStrategy(getSquare, moveHistory)
     }
 
     getPossibleMovesFor(square: Square): Array<Coordinate> {

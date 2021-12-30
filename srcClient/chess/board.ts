@@ -3,6 +3,7 @@ import { Coordinates } from "../coordinates"
 import { LetterCoordinate } from "../letter-coordinate"
 import { NumberCoordinate } from "../number-coordinate"
 import { Color } from "./color"
+import { Move } from "./move"
 import { PieceType } from "./piece-type"
 import { Bishop } from "./pieces/bishop"
 import { King } from "./pieces/king"
@@ -33,8 +34,8 @@ export class Board {
         return this.squares[coord.letter][coord.number]
     }
 
-    getPossibleMovesFor(square: Square): Array<Coordinate> {
-        return square.piece.type.movingStrategy(this.getSquare).getPossibleMovesFor(square)
+    getPossibleMovesFor(square: Square, moveHistory: Move[]): Array<Coordinate> {
+        return square.piece.type.movingStrategy(this.getSquare, moveHistory).getPossibleMovesFor(square)
     }
 
     getAllPieces(color: Color): Square[] {
@@ -42,7 +43,7 @@ export class Board {
             .filter(it => it.piece?.color == color)
     }
 
-    isKingInCheck(kingColor: Color): boolean {
+    isKingInCheck(kingColor: Color, moveHistory: Move[]): boolean {
         const enemyColor = Color.inverted(kingColor)
 
         let king: Square
@@ -61,7 +62,7 @@ export class Board {
         })
 
         return enemyPieces.some(sq => {
-            return this.getPossibleMovesFor(sq).some(it => it.equals(king.coordinate))
+            return this.getPossibleMovesFor(sq, moveHistory).some(it => it.equals(king.coordinate))
         })
     }
 

@@ -1,5 +1,6 @@
 import { Coordinate } from "../coordinate"
 import { Color } from "./color"
+import { Move } from "./move"
 import { BishopMovingStrategy } from "./movingStrategies/bishop-strategy"
 import { KingMovingStrategy } from "./movingStrategies/king-strategy"
 import { KnightMovingStrategy } from "./movingStrategies/knight-strategy"
@@ -17,7 +18,7 @@ export class PieceType {
         unicodeWhite: "♟",
         assetWhite: "pawn_white",
         assetBlack: "pawn_black",
-        movingStrategy: it => new PawnMovingStrategy(it)
+        movingStrategy: (getSquare, getMoveHistory) => new PawnMovingStrategy(getSquare, getMoveHistory)
     })
 
     static readonly Knight = new PieceType({
@@ -27,7 +28,7 @@ export class PieceType {
         unicodeWhite: "♞",
         assetWhite: "knight_white",
         assetBlack: "knight_black",
-        movingStrategy: it => new KnightMovingStrategy(it)
+        movingStrategy: (getSquare, getMoveHistory) => new KnightMovingStrategy(getSquare, getMoveHistory)
     })
 
     static readonly Bishop = new PieceType({
@@ -37,7 +38,7 @@ export class PieceType {
         unicodeWhite: "♝",
         assetWhite: "bishop_white",
         assetBlack: "bishop_black",
-        movingStrategy: it => new BishopMovingStrategy(it)
+        movingStrategy: (getSquare, getMoveHistory) => new BishopMovingStrategy(getSquare, getMoveHistory)
     })
 
     static readonly Rook = new PieceType({
@@ -47,7 +48,7 @@ export class PieceType {
         unicodeWhite: "♜",
         assetWhite: "rook_white",
         assetBlack: "rook_black",
-        movingStrategy: it => new RookMovingStrategy(it)
+        movingStrategy: (getSquare, getMoveHistory) => new RookMovingStrategy(getSquare, getMoveHistory)
     })
 
     static readonly Queen = new PieceType({
@@ -57,7 +58,7 @@ export class PieceType {
         unicodeWhite: "♛",
         assetWhite: "queen_white",
         assetBlack: "queen_black",
-        movingStrategy: it => new QueenMovingStrategy(it)
+        movingStrategy: (getSquare, getMoveHistory) => new QueenMovingStrategy(getSquare, getMoveHistory)
     })
 
     static readonly King = new PieceType({
@@ -67,7 +68,7 @@ export class PieceType {
         unicodeWhite: "♚",
         assetWhite: "king_white",
         assetBlack: "king_black",
-        movingStrategy: it => new KingMovingStrategy(it)
+        movingStrategy: (getSquare, getMoveHistory) => new KingMovingStrategy(getSquare, getMoveHistory)
     })
 
     static readonly values: PieceType[] = [
@@ -89,7 +90,7 @@ export class PieceType {
     readonly unicodeBlack: string
     readonly assetWhite: string
     readonly assetBlack: string
-    readonly movingStrategy: (getSquare: (coord: Coordinate) => Square) => MovingStrategy
+    readonly movingStrategy: (getSquare: (coord: Coordinate) => Square, moveHistory: Move[]) => MovingStrategy
 
     constructor(data: Partial<PieceType>) {
         Object.assign(this, data)
