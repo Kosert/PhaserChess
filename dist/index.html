@@ -34,21 +34,29 @@
 <body class>
     <div class="container-fluid p-4 h-100">
         <div class="row align-items-center h-100">
-            <div id="game" class="col-sm-8"oncontextmenu="return false;">
+            <div id="game" class="col-sm-8" oncontextmenu="return false;">
 
             </div>
             <div class="col-sm-4">
-                <h6 id="diffTop" class="text-white-50">♖♘♗♕♔♗♘♖ +10</h6>
-                <h2 id="timeTop" class="text-light p-2 bg-dark rounded-lg">10:00</h5>
-                <h6 id="nicknameTop" class="text-white-50 px-2 my-1">Nickname1 (Black)</h6>
-                <div class="border-bottom border-light"></div>
-                <h6 id="nicknameBot" class="text-white-50 px-2 my-1">Nickname2 (White)</h6>
-                <h2 id="timeBot" class="text-light p-2 bg-dark rounded-lg">10:00</h5>
-                <h6 id="diffBot" class="text-white-50">♜♞♝♛♚♝♞♜ +10</h6>
+                <h6 id="diffTop" class="text-white-50" hidden>♖♘♗♕♔♗♘♖ +10</h6>
+                <h2 id="timeTop" class="text-light p-2 bg-dark rounded-lg" hidden>10:00</h5>
+                    <h6 id="nicknameTop" class="text-white-50 px-2 my-1">Nickname1 (Black)</h6>
+                    <div class="border-bottom border-light"></div>
+                    <h6 id="nicknameBot" class="text-white-50 px-2 my-1">Nickname2 (White)</h6>
+                    <h2 id="timeBot" class="text-light p-2 bg-dark rounded-lg" hidden>10:00</h5>
+                        <h6 id="diffBot" class="text-white-50" hidden>♜♞♝♛♚♝♞♜ +10</h6>
             </div>
         </div>
     </div>
 
+
+    <div class="toast-container">
+        <div class="toast" id="resultToast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+            <div class="toast-header" id="resultToastText">
+                
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery, Bootstrap Bundle (includes Popper) and Material -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

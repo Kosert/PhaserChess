@@ -36,6 +36,7 @@ export class MainScene extends Scene {
     }
 
     onSquareClicked(obj: SquareObject) {
+        console.log("Click: " + obj.coordinate.toString())
         const colorToPlay = GameState.getColorToMove(this.chess.gameState)
         if (colorToPlay == null)
             return
@@ -82,7 +83,7 @@ export class MainScene extends Scene {
             else
                 return null
         }).filter(it => it)
-        this.boardObject.updatePieces(infos)
+        this.boardObject.updatePieces(infos, this.chess.gameState)
     }
 
     update() {

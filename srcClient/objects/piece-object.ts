@@ -4,12 +4,9 @@ import { LetterCoordinate } from "../letter-coordinate"
 import { NumberCoordinate } from "../number-coordinate"
 import { DragCallback } from "./drag-callback"
 import { PieceInfo } from "./piece-info"
-import { SquareObject } from "./square-object"
 import "../util"
 
 export class PieceObject extends Phaser.GameObjects.Image {
-
-    private pieceDragShadow: Phaser.GameObjects.Image
 
     constructor(
         scene: Phaser.Scene,
@@ -21,7 +18,6 @@ export class PieceObject extends Phaser.GameObjects.Image {
         this.setDepth(5)
         this.setOrigin(0.5)
         this.scene.add.existing(this)
-
         this.setInteractive()
         this.scene.input.setDraggable(this)
 
@@ -59,6 +55,13 @@ export class PieceObject extends Phaser.GameObjects.Image {
         })
 
         this.refresh()
+    }
+
+    setDraggable(draggable: boolean) {
+        if (draggable)
+            this.setInteractive().setDepth(6)
+        else
+            this.disableInteractive().setDepth(5)
     }
 
     refresh(drawConfig: DrawConfig = this.drawConfig) {

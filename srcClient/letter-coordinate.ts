@@ -22,4 +22,8 @@ export namespace LetterCoordinate {
             LetterCoordinate.H,
         ]
     }
+
+    export function isOutOfBounds(value: number): boolean {
+        return value > LetterCoordinate.H || value < LetterCoordinate.A
+    }
 }

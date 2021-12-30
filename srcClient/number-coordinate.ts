@@ -22,4 +22,8 @@ export namespace NumberCoordinate {
             NumberCoordinate.EIGHT
         ]
     }
+    
+    export function isOutOfBounds(value: number): boolean {
+        return value > NumberCoordinate.EIGHT || value < NumberCoordinate.ONE
+    }
 }

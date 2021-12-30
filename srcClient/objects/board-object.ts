@@ -1,3 +1,4 @@
+import { GameState } from "../chess/game-state"
 import { Coordinate } from "../coordinate"
 import { Coordinates } from "../coordinates"
 import { DrawConfig } from "../draw-config"
@@ -70,7 +71,7 @@ export class BoardObject {
         })
     }
 
-    updatePieces(infos: PieceInfo[]) {
+    updatePieces(infos: PieceInfo[], gameState: GameState) {
         const localIds = this.pieces.map(it => it.info.pieceId)
         const remoteIds = infos.map(it => it.pieceId)
 
@@ -89,6 +90,7 @@ export class BoardObject {
 
         infos.forEach(info => {
             const piece = this.pieces.find(it => it.info.pieceId == info.pieceId)
+            piece.setDraggable(info.color == GameState.getColorToMove(gameState))
             if (!info.coordinate.equals(piece.info.coordinate)) {
                 piece.updateCoordinate(info.coordinate)
             }
