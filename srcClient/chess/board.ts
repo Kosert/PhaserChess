@@ -43,26 +43,28 @@ export class Board {
             .filter(it => it.piece?.color == color)
     }
 
-    isKingInCheck(kingColor: Color, moveHistory: Move[]): boolean {
+    isKingInCheck(kingColor: Color): boolean {
         const enemyColor = Color.inverted(kingColor)
+        const kingCoordinate = Coordinates.values.find(it => {
+            const piece = this.getSquare(it).piece
+            return piece?.color == kingColor && piece.type == PieceType.King
+        })
+        return this.isFieldAttacked(kingCoordinate, enemyColor)
+    }
 
-        let king: Square
+    isFieldAttacked(coordinate: Coordinate, enemyColor: Color): boolean {
         let enemyPieces: Square[] = []
         Coordinates.values.forEach((it) => {
             const square = this.getSquare(it)
             if (!square.piece) {
                 return
             }
-            
             if (square.piece.color == enemyColor) {
                 enemyPieces.push(square)
-            } else if (square.piece.type.name == PieceType.King.name) {
-                king = square
             }
         })
-
-        return enemyPieces.some(sq => {
-            return this.getPossibleMovesFor(sq, moveHistory).some(it => it.equals(king.coordinate))
+        return enemyPieces.some(sq => { //move history is irrelevant for this check
+            return this.getPossibleMovesFor(sq, []).some(it => it.equals(coordinate))
         })
     }
 
