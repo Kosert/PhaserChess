@@ -54,7 +54,7 @@ export class MainScene extends Scene {
             if (clickedSquare.piece?.color == colorToPlay) {
                 this.setSelection(clickedSquare)
             } else if (legalCoordinates.some(it => it.equals(clickedSquare.coordinate))) {
-                this.chess.move(this.selected, obj.coordinate)
+                this.chess.move(this.selected, legalCoordinates.find(it => it.equals(clickedSquare.coordinate)))
                 this.setSelection(null)
                 this.onNewMove()
             } else {

@@ -7,4 +7,4 @@ The game is not fully implemented yet. List of todo features:
 - [x] Pawn promotion
 - [ ] Choosing a piece to promote to (currently auto promotion to queen is implemented)
 - [ ] Pawn *en passant* move
-- [ ] King castling
+- [x] King castling
