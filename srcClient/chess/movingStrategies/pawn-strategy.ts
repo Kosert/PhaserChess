@@ -4,6 +4,8 @@ import { Square } from "../square"
 import { LetterCoordinate } from "../../letter-coordinate"
 import { NumberCoordinate } from "../../number-coordinate"
 import { Color } from "../color"
+import { PieceType } from "../piece-type"
+import { CoordinateExtra } from "../coordinate-extra"
 
 export class PawnMovingStrategy extends MovingStrategy {
 
@@ -36,7 +38,25 @@ export class PawnMovingStrategy extends MovingStrategy {
             .filter((it) => this.getSquare(it).piece?.color == enemyColor)
         variations.push(...captureCoordinates)
 
-        // todo en passant
+        // en passant
+        const lastMove = this.moveHistory[this.moveHistory.length - 1]
+        if (lastMove) {
+            const lastMoveNumberDiff = Math.abs(lastMove.source.number - lastMove.target.number)
+            const isPawnOnGoodLine = lastMove.target.number == number
+            
+            if (lastMove.pieceType == PieceType.Pawn && lastMoveNumberDiff > 1 && isPawnOnGoodLine) {
+                if (lastMove.target.letter == letter - 1) {
+                    const coord = new CoordinateExtra(letter - 1, number + directionDiff)
+                    coord.additionalMove = { from: square.coordinate, to: lastMove.target }
+                    variations.push(coord)
+                }
+                if (lastMove.target.letter == letter + 1) {
+                    const coord = new CoordinateExtra(letter + 1, number + directionDiff)
+                    coord.additionalMove = { from: square.coordinate, to: lastMove.target }
+                    variations.push(coord)
+                }
+            }
+        }
 
         return variations
     }
